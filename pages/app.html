@@ -1,0 +1,48 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+
+            <li  ng-class="{'active' : level === 3}"><a  ng-click="updatelevel(3)">3 x 3</a></li>
+            <li  ng-class="{'active' : level === 4}"><a  ng-click="updatelevel(4)">4 x 4</a></li>
+            <li  ng-class="{'active' : level === 5}"><a  ng-click="updatelevel(5)">5 x 5</a></li>
+
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a  ng-click="back()">Back</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="container" ng-show="loading">
+        <md-progress-linear md-mode="query" ></md-progress-linear>
+        <div class="bottom-block">
+            <span>Loading application libraries...</span>
+        </div>
+    </div>
+    <div class="col-md-offset-3 col-md-6">
+
+       <div ng-hide="loading" class="gamebox">
+
+            <div ng-click="slide(i)"
+                 ng-repeat="i in range"  ng-class="{'level3' : level === 3 , 'level4' : level === 4,'level5' : level === 5}">
+                <div id="{{i}}" ng-class="{'box' : game[i]>0 , 'empty-box' : game[i]==0}">
+                    <h3>{{game[i] > 0 ?game[i]:''}}</h3>
+                </div>
+            </div>
+        </div>
+        <div ng-hide="finished || loading" class="time-banner">
+            <div class="col-md-6">
+                <span>Time : {{time}}</span>
+            </div>
+            <div class="col-md-6">
+                <span>Moves : {{sol.length}}</span>
+            </div>
+
+        </div>
+        <div ng-show="finished" class="alert alert-success">
+            <strong>Success!</strong> Solved in {{time}} deciSeconds with {{sol.length}} moves.
+        </div>
+    </div>
+</div>

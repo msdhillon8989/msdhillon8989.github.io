@@ -1,0 +1,219 @@
+
+.banner{
+    width: 100%;
+    height: 80px;
+    margin-top: 0;
+    background-color: #343434  ;
+    padding: 10px;
+    color: white;
+
+}
+.levels{
+    width: 100%;
+    margin-bottom: 1px;
+    margin-top: 1px;
+
+}
+
+.link{
+    color: #999;
+    position: relative;
+    display: block;
+
+    padding: 15px 15px;
+    text-decoration: none;
+    line-height: 20px;
+}
+
+.level{
+    float: left;
+    width: 33.3%;
+
+}
+.level-content
+{
+
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 15px 32px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+.gamebox
+{
+    width: 500px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box{
+    color: #fff;
+    background-color: #4469fc;
+    border: 1px solid white;
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.empty-box{
+    color: #fff;
+    background-color: #efefef;
+    width: 100%;
+    height: 100%;
+    border: 1px solid white;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.level3{
+    float: left;
+    width: 33.3%;
+    height: 33.3%;
+}
+.level4{
+    float: left;
+    width: 25%;
+    height: 25%;
+}
+
+.level5{
+    float: left;
+    width: 20%;
+    height: 20%;
+}
+
+.time-banner{
+    width: 100%;
+    height: 50px;
+    float: left;
+    margin-top: 1px;
+    background-color: #343434  ;
+    padding: 10px;
+    color: white;
+
+}
+#username{
+    color: #ffffff;
+
+    padding: 1px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.highlight{
+    color: #ff2236;
+    font-weight: bold;
+}
+
+
+
+.logout {
+
+    background-color: #f44336;
+    color: #343434;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.logout:hover{
+    background-color: #ff2236;
+
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+
+
+.green {
+    background: #b9f6ca; }
+
+.blue {
+    background: #84ffff; }
+
+.red {
+    background: #FF0000; }
+
+.gray {
+    background: #eeeeee; }
+
+
+.background-image-mines {
+
+    background-image: url('../res/mines.PNG');
+    background-size:100%;
+    background-repeat: no-repeat;
+
+}
+
+.background-image-slide {
+
+    background-image: url('../res/slide.PNG');
+    background-size:100%;
+    background-repeat: no-repeat;
+
+}
+
+.background-image-sudoku {
+
+    background-image: url('../res/sudoku.png');
+    background-size:100%;
+    background-repeat: no-repeat;
+
+}
+
+.fixed-number{
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: not-allowed;
+    color: #999999;
+}
+
+.number{
+    text-decoration: none;
+    font-size: 24px;
+    color: #343434;
+}
+
+.number-button{
+    background-color: rgb(71,175,200);
+}
+
+#buttons{
+    margin-top: 10px;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.blinking-cursor {
+    font-weight: 100;
+    font-size: 30px;
+    color: #2E3D48;
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -ms-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+}
