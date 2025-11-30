@@ -1,48 +1,352 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <ul class="nav navbar-nav">
+<!-- Game Container -->
+<div class="game-container">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+                
+                <!-- Game Panel -->
+                <div class="game-panel">
+                    <!-- Game Header with Navigation -->
+                    <div class="game-header">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="game-title">Sliding Puzzle Game</h2>
+                            <button class="btn btn-material btn-back" ng-click="back()">
+                                <i class="fa fa-arrow-left"></i>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Level Selection -->
+                        <div class="level-selection">
+                            <div class="btn-group" role="group">
+                                <button type="button" 
+                                        class="btn btn-level" 
+                                        ng-class="{'active' : level === 3}"
+                                        ng-click="updatelevel(3)">
+                                    3 x 3
+                                </button>
+                                <button type="button" 
+                                        class="btn btn-level" 
+                                        ng-class="{'active' : level === 4}"
+                                        ng-click="updatelevel(4)">
+                                    4 x 4
+                                </button>
+                                <button type="button" 
+                                        class="btn btn-level" 
+                                        ng-class="{'active' : level === 5}"
+                                        ng-click="updatelevel(5)">
+                                    5 x 5
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-            <li  ng-class="{'active' : level === 3}"><a  ng-click="updatelevel(3)">3 x 3</a></li>
-            <li  ng-class="{'active' : level === 4}"><a  ng-click="updatelevel(4)">4 x 4</a></li>
-            <li  ng-class="{'active' : level === 5}"><a  ng-click="updatelevel(5)">5 x 5</a></li>
+                    <!-- Loading Indicator -->
+                    <div class="loading-section" ng-show="loading">
+                        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px;">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="loading-text">Loading application libraries...</p>
+                        </div>
+                    </div>
 
+                    <!-- Game Board -->
+                    <div class="game-content" ng-hide="loading">
+                        <div class="gamebox">
+                            <div ng-click="slide(i)"
+                                 ng-repeat="i in range"  
+                                 ng-class="{'level3' : level === 3 , 'level4' : level === 4,'level5' : level === 5}">
+                                <div id="{{i}}" 
+                                     ng-class="{'box' : game[i]>0 , 'empty-box' : game[i]==0}"
+                                     class="game-tile">
+                                    <h3>{{game[i] > 0 ?game[i]:''}}</h3>
+                                </div>
+                            </div>
+                        </div>
 
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a  ng-click="back()">Back</a></li>
-        </ul>
-    </div>
-</nav>
+                        <!-- Stats Banner -->
+                        <div class="stats-banner" ng-hide="finished || loading">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="stat-item">
+                                        <i class="fa fa-clock"></i>
+                                        <span class="stat-label">Time:</span>
+                                        <span class="stat-value">{{time}}</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-item">
+                                        <i class="fa fa-exchange"></i>
+                                        <span class="stat-label">Moves:</span>
+                                        <span class="stat-value">{{sol.length}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<div class="container">
-    <div class="container" ng-show="loading">
-        <md-progress-linear md-mode="query" ></md-progress-linear>
-        <div class="bottom-block">
-            <span>Loading application libraries...</span>
-        </div>
-    </div>
-    <div class="col-md-offset-3 col-md-6">
-
-       <div ng-hide="loading" class="gamebox">
-
-            <div ng-click="slide(i)"
-                 ng-repeat="i in range"  ng-class="{'level3' : level === 3 , 'level4' : level === 4,'level5' : level === 5}">
-                <div id="{{i}}" ng-class="{'box' : game[i]>0 , 'empty-box' : game[i]==0}">
-                    <h3>{{game[i] > 0 ?game[i]:''}}</h3>
+                        <!-- Success Message -->
+                        <div class="alert alert-success success-alert" ng-show="finished" role="alert">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-check-circle me-2" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <strong>Success!</strong>
+                                    <p class="mb-0">Solved in {{time}} deciSeconds with {{sol.length}} moves.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div ng-hide="finished || loading" class="time-banner">
-            <div class="col-md-6">
-                <span>Time : {{time}}</span>
-            </div>
-            <div class="col-md-6">
-                <span>Moves : {{sol.length}}</span>
-            </div>
-
-        </div>
-        <div ng-show="finished" class="alert alert-success">
-            <strong>Success!</strong> Solved in {{time}} deciSeconds with {{sol.length}} moves.
-        </div>
     </div>
 </div>
+
+<style>
+/* Game Container */
+.game-container {
+    position: relative;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(180deg, #8cb3ee 0%, #e5e5e5 100%);
+}
+
+/* Game Panel */
+.game-panel {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 30px 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.game-header {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.game-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #212121;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Level Selection Buttons */
+.level-selection {
+    margin-top: 15px;
+}
+
+.btn-level {
+    padding: 10px 20px;
+    border: 2px solid #667eea;
+    background: transparent;
+    color: #667eea;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px !important;
+}
+
+.btn-level:first-child {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.btn-level:last-child {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.btn-level:not(:first-child):not(:last-child) {
+    border-radius: 0 !important;
+    border-left: none;
+    border-right: none;
+}
+
+.btn-level:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.btn-level.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+/* Back Button */
+.btn-back {
+    background: linear-gradient(135deg, #ff9086 0%, #ff0000 100%);
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: white;
+    border-radius: 8px;
+}
+
+.btn-back i {
+    margin-right: 6px;
+}
+
+/* Game Box */
+.gamebox {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.game-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.game-tile.box {
+    background: linear-gradient(135deg, #4469fc 0%, #667eea 100%);
+    color: white;
+    font-weight: 600;
+}
+
+.game-tile.box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.game-tile.empty-box {
+    background: #f5f5f5;
+}
+
+.game-tile h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Level Specific Sizing */
+.level3 {
+    float: left;
+    width: 33.33%;
+    height: 33.33%;
+    padding: 2px;
+}
+
+.level4 {
+    float: left;
+    width: 25%;
+    height: 25%;
+    padding: 2px;
+}
+
+.level5 {
+    float: left;
+    width: 20%;
+    height: 20%;
+    padding: 1px;
+}
+
+/* Stats Banner */
+.stats-banner {
+    background: linear-gradient(135deg, #343434 0%, #4a4a4a 100%);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-top: 20px;
+    color: white;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.stat-item i {
+    font-size: 1.2rem;
+    color: #ffd700;
+}
+
+.stat-label {
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.stat-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Success Alert */
+.success-alert {
+    margin-top: 20px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.success-alert p {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* Loading Section */
+.loading-section {
+    min-height: 400px;
+}
+
+.loading-text {
+    color: #616161;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-panel {
+        padding: 20px 15px;
+    }
+    
+    .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .gamebox {
+        max-width: 100%;
+    }
+    
+    .game-tile h3 {
+        font-size: 1.2rem;
+    }
+    
+    .level-selection .btn-group {
+        width: 100%;
+        display: flex;
+    }
+    
+    .btn-level {
+        flex: 1;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn-back {
+        width: 100%;
+    }
+}
+</style>
